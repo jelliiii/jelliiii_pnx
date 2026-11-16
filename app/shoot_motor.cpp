@@ -108,10 +108,6 @@ void shoot_task_loop()
     motor_manager.transmit(now_us);
 }
 
-static TX_THREAD shoot_thread;
-// 建议：如果你之前发现断点停不下来，大概率是栈溢出了，这里建议改成 4096
-static uint8_t shoot_thread_stack[4096];
-
 void shoot_thread_entry(ULONG thread_input)
 {
     motor_init(bsp::can::handle::fdcan1);
@@ -120,10 +116,4 @@ void shoot_thread_entry(ULONG thread_input)
         shoot_task_loop();
         tx_thread_sleep(1); // 1ms 控制周期
     }
-}
-
-void shoot_task_start()
-{
-    tx_thread_create(&shoot_thread, "shoot_task", shoot_thread_entry, 0, shoot_thread_stack,
-        sizeof(shoot_thread_stack), 5, 5, TX_NO_TIME_SLICE, TX_AUTO_START);
 }

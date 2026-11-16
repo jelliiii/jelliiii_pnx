@@ -1,61 +1,66 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "h723_mc02 DAP",
-      "type": "cortex-debug",
-      "request": "launch",
-      "servertype": "openocd",
-      "serverpath": "openocd",
-      "cwd": "${workspaceFolder}",
-      "executable": "${workspaceFolder}/build/h723_mc02/embedded_framework.elf",
-      "configFiles": [
-        "interface/cmsis-dap.cfg",
-        "target/stm32h7x.cfg"
-      ],
-      "runToEntryPoint": "main"
-    },
-    {
-      "name": "h723_mc02 ST-Link",
-      "type": "cortex-debug",
-      "request": "launch",
-      "servertype": "openocd",
-      "serverpath": "openocd",
-      "cwd": "${workspaceFolder}",
-      "executable": "${workspaceFolder}/build/h723_mc02/embedded_framework.elf",
-      "configFiles": [
-        "interface/stlink.cfg",
-        "target/stm32h7x.cfg"
-      ],
-      "runToEntryPoint": "main"
-    },
-    {
-      "name": "f407_cboard DAP",
-      "type": "cortex-debug",
-      "request": "launch",
-      "servertype": "openocd",
-      "serverpath": "openocd",
-      "cwd": "${workspaceFolder}",
-      "executable": "${workspaceFolder}/build/f407_cboard/embedded_framework.elf",
-      "configFiles": [
-        "interface/cmsis-dap.cfg",
-        "target/stm32f4x.cfg"
-      ],
-      "runToEntryPoint": "main"
-    },
-    {
-      "name": "f407_cboard ST-Link",
-      "type": "cortex-debug",
-      "request": "launch",
-      "servertype": "openocd",
-      "serverpath": "openocd",
-      "cwd": "${workspaceFolder}",
-      "executable": "${workspaceFolder}/build/f407_cboard/embedded_framework.elf",
-      "configFiles": [
-        "interface/stlink.cfg",
-        "target/stm32f4x.cfg"
-      ],
-      "runToEntryPoint": "main"
-    },
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "h723_mc02 DAP",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/h723_mc02/embedded_framework.elf",
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "runToEntryPoint": "main"
+        },
+        {
+            "name": "h723_mc02 ST-Link",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/h723_mc02/embedded_framework.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "runToEntryPoint": "main"
+        },
+        {
+            "name": "f407_cboard DAP",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/f407_cboard/embedded_framework.elf",
+            // 新增以下内容，开启 Live Watch 功能
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 10
+            },
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "runToEntryPoint": "main"
+        },
+        {
+            "name": "f407_cboard ST-Link",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/f407_cboard/embedded_framework.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "runToEntryPoint": "main"
+        },
+    ]
 }

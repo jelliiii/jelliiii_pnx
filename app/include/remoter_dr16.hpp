@@ -12,10 +12,12 @@ pnxtypes::status usart_init;
 pnxtypes::status usart_config;
 pnxtypes::status usart_rx_start;
 pnxtypes::status usart_decode;
+bsp::usart::handle dr16_handle = user_config::dr16_uart.instance;
+const bsp::usart::config dr16_config = user_config::dr16_uart;
 
 void remote_rx_callback(bsp::usart::handle usart, uint8_t* data, uint32_t len)
 {
-    if (usart != bsp::usart::handle::uart5 || data == nullptr)
+    if (usart != dr16_handle || data == nullptr)
     {
         return;
     }
@@ -52,10 +54,10 @@ void remote_rx_callback(bsp::usart::handle usart, uint8_t* data, uint32_t len)
 void dr16_remoter_init()
 {
     // 先配置再初始化
-    usart_config = bsp::usart::configure(bsp::usart::handle::uart5, user_config::dr16_line);
+    usart_config = bsp::usart::configure(user_config::dr16_uart.instance, user_config::dr16_line);
     // init函数先检查是否是 dma 模式，若是，则检查 tx 和 rx 是否都配了 dma
-    usart_init = bsp::usart::init(bsp::peripherals::uart5, bsp::usart::mode::block);
+    usart_init = bsp::usart::init(dr16_config, bsp::usart::mode::block);
 
-    usart_rx_start = bsp::usart::start_rx_to_idle(bsp::usart::handle::uart5, rx_buffer,
+    usart_rx_start = bsp::usart::start_rx_to_idle(user_config::dr16_uart.instance, rx_buffer,
         bsp::usart::rx_callback::bind<remote_rx_callback>());
 }
