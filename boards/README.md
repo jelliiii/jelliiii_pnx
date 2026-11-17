@@ -30,6 +30,20 @@ set(BOARD "h723_mc02" CACHE STRING "Target board")
 `-DBOARD=f407_cboard`，或 Presets 的 `cacheVariables.BOARD` 选择。
 选择会保存在构建目录的缓存中，无效名称会报错。
 
+`BOARD` 是 CMake 使用的板卡目录名，不是 C/C++ 预处理宏。各板实际导出的芯片宏和 HAL
+头文件如下：
+
+| `BOARD` | 芯片宏 | HAL 头文件 |
+| --- | --- | --- |
+| `h723_mc02` | `STM32H723xx` | `stm32h7xx_hal.h` |
+| `f407_cboard` | `STM32F407xx` | `stm32f4xx_hal.h` |
+
+宏在 `boards/cubemx/<board>/cmake/stm32cubemx/CMakeLists.txt` 的
+`MX_Defines_Syms` 中定义，并通过 `stm32cubemx` target 传递给应用。写芯片条件编译时使用
+芯片宏（如 `#if defined(STM32H723xx)`），不要使用 `BOARD` 名称，也不要用 HAL 头文件的
+include guard 判断芯片。可以从 CMake 配置输出的 `Target board` 确认当前选板；排查实际
+编译参数时，查看对应构建目录的 `compile_commands.json` 中 `-DSTM32...` 参数。
+
 ## wrapper 接口与使用
 
 `wrapper/${BOARD}/include/` 中的头文件通过 `board` CMake INTERFACE target
@@ -230,4 +244,3 @@ clean/invalidate、完成后 invalidate；使用对齐的 `data()` 和 `capacity
 - 工具链仍由顶层指定，需与 board 匹配；切换 board 建议使用独立构建目录。已有缓存不会随默认值改变，需显式传入 `-DBOARD=h723_mc02` 切换。
 - 修改引脚、时钟和外设时，优先修改 `.ioc`；手写代码尽量保留在 `USER CODE` 区域。
 - 新增 board 时，添加 `cubemx/<board>/`、`memory/<board>.ld` 和 `wrapper/<board>/`（包含 `include/` 与 `src/init.cpp`），更新 `_supported_boards`，并配置对应工具链。
-

@@ -23,6 +23,11 @@
             "serverpath": "openocd",
             "cwd": "${workspaceFolder}",
             "executable": "${workspaceFolder}/build/h723_mc02/embedded_framework.elf",
+            // 新增以下内容，开启 Live Watch 功能
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 10
+            },
             "configFiles": [
                 "interface/stlink.cfg",
                 "target/stm32h7x.cfg"

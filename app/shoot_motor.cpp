@@ -61,14 +61,14 @@ void motor_init(bsp::can::handle bus)
 void remoter_to_shoot()
 {
     // 拨杆在下面（下电/停止档），全部放松
-    if (remote_data.right_sw == remotes::sw_state::low)
-    {
-        fric_motor1.motor_mode = motor::mode::relax;
-        fric_motor2.motor_mode = motor::mode::relax;
-        fric_motor3.motor_mode = motor::mode::relax;
-        trigger_motor.motor_mode = motor::mode::relax;
-        return;
-    }
+    // if (remote_data.right_sw == remotes::sw_state::low)
+    // {
+    //     fric_motor1.motor_mode = motor::mode::relax;
+    //     fric_motor2.motor_mode = motor::mode::relax;
+    //     fric_motor3.motor_mode = motor::mode::relax;
+    //     trigger_motor.motor_mode = motor::mode::relax;
+    //     return;
+    // }
     // 必须电机都上线才允许发力（安全保护）
     if (fric_motor1.motor_state == motor::state::online &&
         trigger_motor.motor_state == motor::state::online)

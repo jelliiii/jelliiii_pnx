@@ -5,9 +5,15 @@
 
 extern "C"
 {
+#if defined(STM32H723xx)
+#include "stm32h7xx_hal.h"
+#elif defined(STM32F407xx)
 #include "stm32f4xx_hal.h"
+#else
+#error "Unsupported STM32 device for app_ps2.hpp"
+#endif
     // 如果 main.h 里没有引 HAL 库，你可能得加上这句：
-    // #include "stm32f4xx_hal.h"
+    // include the HAL header selected above.
 }
 
 /*

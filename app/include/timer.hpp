@@ -1,5 +1,12 @@
+#include <stdint.h>
+
+#if defined(STM32H723xx)
+#include "stm32h7xx_hal.h"
+#elif defined(STM32F407xx)
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx.h"
+#else
+#error "Unsupported STM32 device for timer.hpp"
+#endif
 
 extern uint32_t SystemCoreClock;
 uint32_t cycles_per_us = 260;

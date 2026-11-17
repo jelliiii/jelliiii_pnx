@@ -1,7 +1,5 @@
 
 #include "bsp_can.hpp"
-#include "shoot_motor.hpp"
-#include "remoter_ps2.hpp"
 
 static TX_THREAD shoot_thread;
 static uint8_t shoot_thread_stack[4096];
