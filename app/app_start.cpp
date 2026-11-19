@@ -1,5 +1,6 @@
 
 #include "bsp_can.hpp"
+#include "bsp_dwt.hpp"
 
 static TX_THREAD shoot_thread;
 static uint8_t shoot_thread_stack[4096];
@@ -8,6 +9,10 @@ extern void shoot_thread_entry(ULONG thread_input);
 static TX_THREAD ps2_thread;
 static uint8_t ps2_thread_stack[4096];
 extern void ps2_thread_entry(ULONG thread_input);
+
+static TX_THREAD chassis_thread;
+static uint8_t chassis_thread_stack[4096];
+extern void chassis_thread_entry(ULONG thread_input);
 
 void shoot_task_start()
 {
@@ -21,8 +26,16 @@ void ps2_task_start()
         sizeof(ps2_thread_stack), 3, 3, TX_NO_TIME_SLICE, TX_AUTO_START);
 }
 
+void chassis_task_start()
+{
+    tx_thread_create(&chassis_thread, "chassis_task", chassis_thread_entry, 0, chassis_thread_stack,
+        sizeof(chassis_thread_stack), 6, 6, TX_NO_TIME_SLICE, TX_AUTO_START);
+}
+
 extern "C" void app_start()
 {
+    bsp::dwt::init();
     ps2_task_start();
-    shoot_task_start();
+    // shoot_task_start();
+    // chassis_task_start();
 }

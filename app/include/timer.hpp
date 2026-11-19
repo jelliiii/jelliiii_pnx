@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdint.h>
 
 #if defined(STM32H723xx)

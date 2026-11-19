@@ -1,5 +1,5 @@
-#include "include/app_ps2.hpp"
-
+#include "include/driver_ps2.hpp"
+#include "bsp_dwt.hpp"
 // 内部接收缓冲区
 static uint8_t PS2_Rx_Buffer[9];
 
@@ -11,26 +11,12 @@ static const uint8_t PS2_Tx_Buffer[9] = {0x01, 0x42, 0x00, 0x00, 0x00, 0x00, 0x0
  * @brief 微秒级延时 (必须精准，否则通信失败)
  * @param us: 延时微秒数
  */
-extern uint32_t get_system_time_us(); // 声明一下你在 timer.hpp 里的函数
-extern void timer_init();
-
-void PS2_Delay_us(uint16_t us)
-{
-    uint32_t start = get_system_time_us();
-    while ((get_system_time_us() - start) < us)
-    {
-        // 死等，靠硬件计数器计时，精准度极高
-    }
-}
 
 void PS2_Init(void)
 {
     HAL_GPIO_WritePin(PS2_CS_PORT, PS2_CS_PIN, GPIO_PIN_SET);   // CS 拉高，待机
     HAL_GPIO_WritePin(PS2_CLK_PORT, PS2_CLK_PIN, GPIO_PIN_SET); // CLK 拉高，待机
     HAL_GPIO_WritePin(PS2_CMD_PORT, PS2_CMD_PIN, GPIO_PIN_SET); // CMD 一般也拉高
-
-    // 4. 初始化底层的延时函数（如果用 DWT，可以在这里初始化）
-    timer_init();
 
     // 5. (可选) 发送复位或配置命令，将手柄唤醒至模拟模式
     // ...
@@ -61,7 +47,7 @@ static uint8_t PS2_Transfer_Byte(uint8_t tx_data)
 
         // 2. 拉低时钟 (开始传输)
         HAL_GPIO_WritePin(PS2_CLK_PORT, PS2_CLK_PIN, GPIO_PIN_RESET);
-        PS2_Delay_us(10); // 延时约 10us
+        bsp::dwt::delay_us(5); // 延时约 5us
 
         // 3. 读取返回位
         if (HAL_GPIO_ReadPin(PS2_DI_PORT, PS2_DI_PIN) == GPIO_PIN_SET)
@@ -71,7 +57,7 @@ static uint8_t PS2_Transfer_Byte(uint8_t tx_data)
 
         // 4. 拉高时钟 (结束传输)
         HAL_GPIO_WritePin(PS2_CLK_PORT, PS2_CLK_PIN, GPIO_PIN_SET);
-        PS2_Delay_us(10); // 延时约 10us
+        bsp::dwt::delay_us(5); // 延时约 5us
     }
     return rx_data;
 }

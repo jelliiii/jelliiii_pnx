@@ -1,3 +1,5 @@
+#pragma once
+
 #include "bsp_usart.hpp"
 #include "memory.hpp"
 #include "remoter.hpp"

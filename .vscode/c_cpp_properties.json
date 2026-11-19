@@ -36,7 +36,8 @@
                 "${workspaceFolder}/boards/cubemx/h723_mc02/Middlewares/ST/usbx/common/usbx_device_classes/inc",
                 "${workspaceFolder}/boards/cubemx/h723_mc02/Middlewares/ST/threadx/common/inc",
                 "${workspaceFolder}/boards/cubemx/h723_mc02/Middlewares/ST/threadx/ports/cortex_m7/gnu/inc",
-                "${workspaceFolder}/boards/cubemx/h723_mc02/Middlewares/ST/ARM/DSP/Inc"
+                "${workspaceFolder}/boards/cubemx/h723_mc02/Middlewares/ST/ARM/DSP/Inc",
+                "${workspaceFolder}/app/include"
             ],
             "defines": [
                 "USE_PWR_LDO_SUPPLY",
@@ -78,7 +79,8 @@
                 "${workspaceFolder}/boards/cubemx/f407_cboard/Middlewares/ST/usbx/common/usbx_stm32_device_controllers",
                 "${workspaceFolder}/boards/cubemx/f407_cboard/Middlewares/ST/usbx/common/usbx_device_classes/inc",
                 "${workspaceFolder}/boards/cubemx/f407_cboard/Middlewares/ST/threadx/common/inc",
-                "${workspaceFolder}/boards/cubemx/f407_cboard/Middlewares/ST/threadx/ports/cortex_m4/gnu/inc"
+                "${workspaceFolder}/boards/cubemx/f407_cboard/Middlewares/ST/threadx/ports/cortex_m4/gnu/inc",
+                "${workspaceFolder}/app/include"
             ],
             "defines": [
                 "TX_INCLUDE_USER_DEFINE_FILE",
